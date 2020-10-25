@@ -1,0 +1,959 @@
+{
+	"info": {
+		"_postman_id": "8f05f300-fafd-4477-a495-0a491c92e0bc",
+		"name": "a_Zavrsni",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Visit main page",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3a30a504-3700-4fe9-95f2-3b22aa788cc7",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{mainlink}}",
+					"host": [
+						"{{mainlink}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "532fc524-3292-4641-a3f5-f410fc02419a",
+						"exec": [
+							"var email = \"bek\" + _.random(1, 10000) + \"@bek.com\"",
+							"pm.environment.set(\"mejl\", email)",
+							"var firstName = \"Beki\" + _.random(1, 10000) ",
+							"pm.environment.set(\"ime\", firstName)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b79377b-6d06-45e1-b9f4-bad641738616",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"{{mejl}}\",\n    \"firstName\":\"{{ime}}\",\n    \"lastName\":\"{{prezime}}\",\n    \"password\":\"{{lozinka}}\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mainlink}}api/register",
+					"host": [
+						"{{mainlink}}api"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f618b847-fcf9-40a4-8818-963bee55d764",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"postman.setEnvironmentVariable(\"token\" , jsonData.token)",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "741df69e-f40f-4184-8f9d-0606bcc4db42",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"{{mejl}}\",\n\"password\":\"{{lozinka}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mainlink}}api/login",
+					"host": [
+						"{{mainlink}}api"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Gradebook_ulaz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "92c424c4-e523-46d1-afa2-d5027e65e92a",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mainlink}}api/professors",
+					"host": [
+						"{{mainlink}}api"
+					],
+					"path": [
+						"professors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Gradebook_NapraviPredmet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e7dddb78-5537-4cee-bdc6-fb6c7d68e264",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"var jsonData = pm.response.json();",
+							"var id = jsonData.id;",
+							"pm.environment.set(\"broj_predmeta\", id);",
+							"var titleEnv = pm.environment.get(\"predmet\");",
+							"tests[\"predmet:\" + jsonData.title] = jsonData.title === titleEnv;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4a6a65cc-4e03-4400-8acb-d009fb4e82b5",
+						"exec": [
+							"var title = \"Novi predmet\" + _.random(1, 10000) ",
+							"pm.environment.set(\"predmet\", title)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"professor_id\": \"{{jmbg_profesora}}\",\n    \"title\":  \"{{predmet}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mainlink}}api/diaries",
+					"host": [
+						"{{mainlink}}api"
+					],
+					"path": [
+						"diaries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "My Gradebook_ulaz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca7e4f69-d967-4139-9db6-910c0bcb205b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mainlink}}/api/diaries/my-diary/{{jmbg_profesora}}",
+					"host": [
+						"{{mainlink}}"
+					],
+					"path": [
+						"api",
+						"diaries",
+						"my-diary",
+						"{{jmbg_profesora}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "My Gradebook_dodajUcenika",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9e0ae8ac-19ff-4864-bec3-96e7e9f280fd",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3935a78d-de5b-48a9-8b31-c1776fa21153",
+						"exec": [
+							"var firstName = \"Mali\" + _.random(1, 10000) ",
+							"pm.environment.set(\"imeUcenika\", firstName)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"{{imeUcenika}}\",\n    \"lastName\": \"{{prezimeUcenika}}\",\n    \"url\": [\"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Ron_Jeremy_2009.jpg/220px-Ron_Jeremy_2009.jpg\"]\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mainlink}}api/diaries/{{broj_predmeta}}/students",
+					"host": [
+						"{{mainlink}}api"
+					],
+					"path": [
+						"diaries",
+						"{{broj_predmeta}}",
+						"students"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "My Gradebook_editujPredmet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c8321072-f2eb-4b6b-82c8-962980ce3e7b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4d980d68-9c37-40e0-b620-64852cf4de1d",
+						"exec": [
+							"var title = \"Napredni Novi Predmet\" + _.random(1, 10000) ",
+							"pm.environment.set(\"novipredmet\", title)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\" : \"{{predmet}}\",\n    \"professor_id\" : \"{{jmbg_profesora}}\",\n    \"title\" : \"{{novipredmet}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mainlink}}api/diaries/{{broj_predmeta}}",
+					"host": [
+						"{{mainlink}}api"
+					],
+					"path": [
+						"diaries",
+						"{{broj_predmeta}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "My Gradebook_dodajKomentar",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a6f44dac-032a-453a-bece-aef485184a89",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"var jsonData = pm.response.json();",
+							"var id = jsonData.id;",
+							"pm.environment.set(\"id_komentara\", id);",
+							"var titleEnv = pm.environment.get(\"komentar\");",
+							"tests[\"komentar:\" + jsonData.text] = jsonData.text === titleEnv;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c86cb42c-f0e1-4b30-8edc-aaaf3efaec29",
+						"exec": [
+							"var text = \"JaSamCar\" + _.random(1, 10000) ",
+							"pm.environment.set(\"komentar\", text)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\" : \"{{komentar}}\" ,\n    \"id\" : \"{{jmbg_profesora}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mainlink}}api/diaries/{{broj_predmeta}}/comments",
+					"host": [
+						"{{mainlink}}api"
+					],
+					"path": [
+						"diaries",
+						"{{broj_predmeta}}",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "My Gradebook_obrisiKomentar",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5b7b7563-a4d2-4acb-b682-5b37fc6242c7",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{mainlink}}api/comments/{{id_komentara}}",
+					"host": [
+						"{{mainlink}}api"
+					],
+					"path": [
+						"comments",
+						"{{id_komentara}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "My Gradebook_izbrisiPredmet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "72c37c87-8c16-4f34-9e91-f99ef9e7eb6e",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mainlink}}api/diaries/{{broj_predmeta}}",
+					"host": [
+						"{{mainlink}}api"
+					],
+					"path": [
+						"diaries",
+						"{{broj_predmeta}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Profesors",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "787f6be9-df55-4b90-bb49-3c95f687a5c3",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mainlink}}api/professors",
+					"host": [
+						"{{mainlink}}api"
+					],
+					"path": [
+						"professors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Professor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "46c8f1e1-733d-49b2-8316-0d3fc5f9b650",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d737aaf4-328b-45ac-a9ae-582de513ebcf",
+						"exec": [
+							"var firstName = \"Mika\" + _.random(1, 10000) ",
+							"pm.environment.set(\"NovoIme\", firstName)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"{{NovoIme}}\",\n    \"lastName\": \"{{NovoPrezime}}\",\n    \"url\": [\"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Ron_Jeremy_2009.jpg/220px-Ron_Jeremy_2009.jpg\"]\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mainlink}}api/professors",
+					"host": [
+						"{{mainlink}}api"
+					],
+					"path": [
+						"professors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Gradebook Filter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "05998725-5a1a-4a06-bd68-e31d8af98746",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{mainlink}}api/diaries?page=1",
+					"host": [
+						"{{mainlink}}api"
+					],
+					"path": [
+						"diaries"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "-N- Register",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "01c1523e-7580-4336-8033-976ac38d9b7c",
+						"exec": [
+							"var email = \"bek\" + _.random(1, 10000) + \"@bek.com\"",
+							"pm.environment.set(\"mejl\", email)",
+							"var firstName = \"Beki\" + _.random(1, 10000) ",
+							"pm.environment.set(\"ime\", firstName)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "96c2fde0-1d99-44df-82ca-9908ccf79def",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"{{mejl}}\",\n    \"firstName\":\"{{ime}}\",\n    \"lastName\":\"{{prezime}}\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mainlink}}api/register",
+					"host": [
+						"{{mainlink}}api"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "a2e35fa5-bb74-4072-a90c-e1c248d4c0f5",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "c5ec2b8d-de0c-42b2-9c42-6fa2df89786c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

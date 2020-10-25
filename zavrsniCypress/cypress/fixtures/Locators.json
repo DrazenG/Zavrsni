@@ -1,0 +1,60 @@
+{
+    "Header": {
+        "SignIn" : ".nav-link",
+        "Register" : ".nav-link"
+    },
+    "Register": {
+        "FirstName" : ".form-control", 
+        "LastName" : ".form-control",
+        "Password" : ".form-control",
+        "PasswordConfirmation" : ".form-control",
+        "FormCheckInput" : ".form-control",
+        "Email" : ".form-control",
+        "Submit" : ".btn"
+    },
+    "SignIn" : {
+        "Email" : ".form-control",
+        "Password" : ".form-control",
+        "Submit" : ".btn"
+    },
+    "Header2" : {
+        "MyGradebook" : ".nav-link",
+        "CreateGradebook" : ".nav-link",
+        "Professors" : ".nav-link",
+        "SignOut" : ".nav-link"
+
+    },
+    "MyGradebook" : {
+
+        "AddStudent" : ".btn-primary",
+            "FirstName" : ".form-control",
+            "LastName" : ".form-control",
+            "AddImage" : ".btn",
+            "ImageLink" : ".form-control",
+            "Submit" : ".btn",
+         "EditGradebook" : ".btn-warning",
+            "GradebookTitle" : ".form-control",
+            "Professor" : ".form-control",
+        "AddComments" : ".form-control",
+        "SubmitComment" : ".btn-primary",
+        "DeleteComment" : ".btn-danger",
+        "DeleteGradebook" : ".btn"
+
+    },
+    "CreateGradebook" : {
+        "GradebookTitle" : ".form-control",
+        "Professor" : ".form-control",
+        "Submit" : ".btn"
+    },
+    "Professors" : {
+        "AllProfessors" : ".dropdown-item",
+        "CreateProfessor" : ".dropdown-item",
+        "FirstName" : "#firstName",
+        "LastName" : "#lastName",
+        "AddImage" : ".btn",
+        "ImageLink" : ".form-control",
+        "Submit" : ".btn"
+    },
+    "SignOut" : ".nav-link" 
+
+}
